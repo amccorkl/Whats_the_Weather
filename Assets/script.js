@@ -27,16 +27,15 @@ function renderSavedCities() {
     //buttons must have a value
     savedCityBtn.setAttribute("value", citiesPosted);
     savedCityBtn.setAttribute("class", "city-btn");
-
+    
     savedCityBtn.addEventListener("click", function () {
       console.log(this);
       getCityButton(this.value);
     });
   }
 
-//   getCityWeather(event);
 }
-
+//delete city button?
 // function clearCityBtn (x) {
 //     while(x.firstChild) {
 //         x.removeChild(x.firstChild);
@@ -111,6 +110,7 @@ let getCityWeather = function (event) {
 
   let cityInput = cityName.value;
 
+  //clears the input after info gathered
   cityName.value = "";
  
   //looks to see if there is already a city in the array and won't reset the city if so; otherwise it will save the city in local storage 
