@@ -60,8 +60,6 @@ let getCityButton = function (cityValue) {
       .then(function (data) {
         console.log(data);
 
-        
-  
         let currentDate = moment.unix(data.dt).format("MMMM Do, YYYY");
   
         let currentTemp = document.createElement("p");
@@ -74,8 +72,6 @@ let getCityButton = function (cityValue) {
         currentTemp.textContent = "Current Temp: " + data.main.temp + " F";
         currentWind.textContent = "Wind: " + data.wind.speed + " mph";
         currentHumidity.textContent = "Humidity: " + data.main.humidity + " %";
-
-        // currentUV.textContent = "UV Index: " + data.daily.uvi;
   
         let weatherIcon = data.weather[0].icon;
         let weatherImage = document.createElement("img");
@@ -86,7 +82,6 @@ let getCityButton = function (cityValue) {
 
         //clear out the div
         currentWeatherUL.innerHTML = "";
-        // cityValue.value = "";
 
         currentDateH3.append(weatherImage);
         currentWeatherUL.append(
@@ -94,12 +89,8 @@ let getCityButton = function (cityValue) {
           currentWind,
           currentHumidity,
           currentUV
-        );
-      
-        
-    });
-           
-      
+        );       
+    });   
     futureForecast(cityValue);  
   };
 
@@ -110,10 +101,10 @@ let getCityWeather = function (event) {
 
   let cityInput = cityName.value;
 
-  //clears the input after info gathered
+  //clears the input textare after info gathered
   cityName.value = "";
  
-  //looks to see if there is already a city in the array and won't reset the city if so; otherwise it will save the city in local storage 
+  //looks to see if there is already a city in the array using the -1 and won't reset the city if so; otherwise it will save the city in local storage 
   if (pastCityList.indexOf(cityInput) === -1) {
     pastCityList.push(cityInput);
     localStorage.setItem("cityData", JSON.stringify(pastCityList));
@@ -128,7 +119,6 @@ let getCityWeather = function (event) {
   fetch(requestUrl)
     .then(function (response) {
         if (response.ok) {
-
         }
       return response.json();
     })
@@ -145,15 +135,14 @@ let getCityWeather = function (event) {
       currentTemp.textContent = "Current Temp: " + data.main.temp + " F";
       currentWind.textContent = "Wind: " + data.wind.speed + " mph";
       currentHumidity.textContent = "Humidity: " + data.main.humidity + " %";
-      // currentUV.textContent = "UV Index: " + data.daily.uvi;
 
       let weatherIcon = data.weather[0].icon;
       let weatherImage = document.createElement("img");
-
       weatherImage.setAttribute(
         "src",
         "http://openweathermap.org/img/wn/" + weatherIcon + ".png"
       );
+
       currentCityH3.textContent = data.name;
       currentDateH3.textContent = currentDate;
       // currentCityH3.textContent = weatherImage;
@@ -177,8 +166,6 @@ let getCityWeather = function (event) {
 };
 
 let futureForecast = function (cityInput) {
-  
-//   let cityInput = cityName.value;
 
   var currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&appid=${apiKey}&units=imperial`;
   fetch(currentUrl)
@@ -197,11 +184,6 @@ let futureForecast = function (cityInput) {
 
           //title of the future EL
           let futureForecastEl = document.getElementById("5day-card");
-          let forecastTitleEL = document.createElement("h2");
-          forecastTitleEL.textContent = "Five Day Forecast";
-          futureForecastEl.append(forecastTitleEL);
-          console.log(forecastTitleEL);
-
 
           let daily = data.daily;
           console.log(daily);
@@ -217,8 +199,7 @@ let futureForecast = function (cityInput) {
             let dailyTitleDay = document.createElement("h3");
             let dailyCardBody = document.createElement("div");
 
-            // dailyCardEl.setAttribute("class", "col-2");
-            dailyCardEl.setAttribute("style", "border: black 1px solid;");
+            dailyCardEl.setAttribute("style", "border: white 1px solid;");
 
             let currentDate = moment.unix(element.dt).format("ddd");
             dailyTitleDay.textContent = currentDate;
@@ -232,22 +213,15 @@ let futureForecast = function (cityInput) {
             );
 
             let temp = document.createElement("p")
-            // temp.setAttribute("class", "future-p");
             let humid = document.createElement("p")
-            // humid.setAttribute("class", "future-p");
             let wind = document.createElement("p");
-            // wind.setAttribute("class", "future-p");
-            let uvi = document.createElement("p");
-            // uvi.setAttribute("class", "future-p");
-
-           
+            let uvi = document.createElement("p");           
 
             temp.textContent = element.temp.day + "F";
             humid.textContent = element.humidity + "%";
             wind.textContent = element.wind_speed + "mph";
             uvi.textContent = element.uvi + "uv index";
 
-            
             dailyCardBody.setAttribute("class", "future-p");
             dailyCardBody.setAttribute("style", "border: 1px black solid");
             dailyCardBody.append(temp, humid, wind, uvi);
@@ -262,7 +236,7 @@ let futureForecast = function (cityInput) {
 
 
 //load local storage on ui immediately 
-document.addEventListener("DOMContentLoaded", renderSavedCities());
+renderSavedCities();
 
 //search for city button activiated
 searchCityBtn.addEventListener("click", getCityWeather);
