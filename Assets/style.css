@@ -1,0 +1,42 @@
+body {
+    background-image: url(./3E973048-B84A-4A8E-A50C-379703AA704C.jpeg);
+    background-size: cover;
+    /* background-color: rgb(157, 190, 221); */
+    color: white;
+    
+}
+
+h1 {
+    text-align: center;
+    background-color: rgba#ffc107e5;
+    
+    font-weight: bolder;
+    border-top: 1px solid black;
+    border-radius: 3px;
+}
+
+h2 {
+    background-color: #ffc107;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.search {
+    background-color: inherit;
+    border: none;
+}
+
+.card {
+    background-color: inherit;
+    border: none;
+    text-align: center;
+}
+
+.form {
+    background-color: inherit;
+}
+
+.current {
+    flex: 1 1 0%;
+}
+
