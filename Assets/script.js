@@ -37,6 +37,12 @@ function renderSavedCities() {
 //   getCityWeather(event);
 }
 
+// function clearCityBtn (x) {
+//     while(x.firstChild) {
+//         x.removeChild(x.firstChild);
+//     }
+// }
+
 //initial search for a city's weather
 let getCityButton = function (cityValue) {
       
@@ -49,11 +55,13 @@ let getCityButton = function (cityValue) {
       apiKey +
       "&units=imperial";
     fetch(requestUrl)
-      .then(function (response) {
+      .then(function (response) { 
         return response.json();
-      })
+        })
       .then(function (data) {
         console.log(data);
+
+        
   
         let currentDate = moment.unix(data.dt).format("MMMM Do, YYYY");
   
@@ -77,11 +85,9 @@ let getCityButton = function (cityValue) {
           "http://openweathermap.org/img/wn/" + weatherIcon + ".png"
         );
 
-        
-        
-
         //clear out the div
         currentWeatherUL.innerHTML = "";
+        // cityValue.value = "";
 
         currentDateH3.append(weatherImage);
         currentWeatherUL.append(
@@ -90,8 +96,11 @@ let getCityButton = function (cityValue) {
           currentHumidity,
           currentUV
         );
-      });
-  
+      
+        
+    });
+           
+      
     futureForecast(cityValue);  
   };
 
@@ -102,6 +111,8 @@ let getCityWeather = function (event) {
 
   let cityInput = cityName.value;
 
+  cityName.value = "";
+ 
   //looks to see if there is already a city in the array and won't reset the city if so; otherwise it will save the city in local storage 
   if (pastCityList.indexOf(cityInput) === -1) {
     pastCityList.push(cityInput);
@@ -116,11 +127,14 @@ let getCityWeather = function (event) {
     "&units=imperial";
   fetch(requestUrl)
     .then(function (response) {
+        if (response.ok) {
+
+        }
       return response.json();
     })
     .then(function (data) {
       console.log(data);
-
+      
       let currentDate = moment.unix(data.dt).format("MMMM Do, YYYY");
 
       let currentTemp = document.createElement("p");
@@ -158,7 +172,7 @@ let getCityWeather = function (event) {
     });
 
   futureForecast(cityInput);
-  renderSavedCities();
+//   renderSavedCities();
 
 };
 
@@ -246,7 +260,9 @@ let futureForecast = function (cityInput) {
     });
 };
 
+
 //load local storage on ui immediately 
+document.addEventListener("DOMContentLoaded", renderSavedCities());
 
-
+//search for city button activiated
 searchCityBtn.addEventListener("click", getCityWeather);
